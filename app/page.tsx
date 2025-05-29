@@ -28,14 +28,14 @@ export default function TrueKimeHomepage() {
     {
       id: 1,
       name: "True Kime Branded Tee Shirt",
-      price: "$42 CAD",
+      price: "$35 CAD",
       imageFront: "/images/truekime_shirtfront.webp",
       imageBack: "/images/truekime_shirtback.webp",
     },
     {
       id: 2,
       name: "True Kime Branded Hoodie",
-      price: "$42 CAD",
+      price: "$50 CAD",
       imageFront: "/images/truekimehoodiefront.webp",
       imageBack: "/images/truekimehoodieback.webp",
     },

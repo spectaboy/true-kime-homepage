@@ -10,6 +10,7 @@ import Image from "next/image"
 import AnimatedHoodie from "@/components/animated-hoodie"
 import { motion } from "framer-motion"
 import React from "react"
+import Link from "next/link"
 
 export default function TrueKimeHomepage() {
   const [scrollY, setScrollY] = useState(0)
@@ -93,6 +94,22 @@ export default function TrueKimeHomepage() {
               </div>
             </div>
             <div className="flex items-center space-x-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-gray-300 hover:text-red-500 font-brand"
+                asChild
+              >
+                <Link href="/contact">Contact</Link>
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-gray-300 hover:text-red-500 font-brand"
+                asChild
+              >
+                <Link href="/team">Our Team</Link>
+              </Button>
               <Button
                 asChild
                 variant="outline"
@@ -235,19 +252,20 @@ export default function TrueKimeHomepage() {
               variants={{ hidden: { opacity: 0, y: 40 }, visible: { opacity: 1, y: 0 } }}
               transition={{ delay: 1, duration: 0.8, ease: 'easeOut' }}
             >
-              <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-8 font-body">
-                In martial arts,{' '}
-                <span className="font-brush text-red-500 font-bold text-3xl transform -rotate-1 inline-block">
-                  Kime
-                </span>{' '}
-                represents the moment of total commitment— when mind, body, and spirit unite in perfect focus. It's the
-                decisive instant where hesitation disappears and true power emerges.
-              </p>
-              <p className="text-lg text-gray-400 leading-relaxed font-body">
-                True Kime brings this philosophy to life through premium streetwear that embodies discipline,
-                authenticity, and unwavering commitment to excellence. Every piece tells the story of those who choose
-                to stay true to their path.
-              </p>
+              <div className="space-y-6">
+                <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-body">
+                  <span className="font-brush text-red-500 font-bold text-3xl transform -rotate-1 inline-block">
+                    Kime
+                  </span>{' '}
+                  is a Japanese word that translates to "decision" — a powerful concept that shapes our lives. Every choice we make defines who we are, what we stand for, and the path we walk. At True Kime, we believe that decisions are everything — they determine our growth, our struggles, and our successes.
+                </p>
+                <p className="text-lg text-gray-400 leading-relaxed font-body">
+                  Life throws challenges at us. Sometimes, we lose our way, get distracted, or feel uncertain about the path ahead. That's where True Kime comes in. Our brand represents the mindset of staying true to yourself, your goals, and your journey, no matter how tough it gets.
+                </p>
+                <p className="text-lg text-gray-400 leading-relaxed font-body">
+                  True Kime brings this philosophy to life through premium streetwear. Every piece tells the story of those who choose to stay true to their path.
+                </p>
+              </div>
             </motion.div>
           </div>
         </div>

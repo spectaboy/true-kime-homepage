@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ShoppingCart, Instagram, Twitter, Youtube, ArrowRight, Star, Play } from "lucide-react"
+import { ShoppingCart, Instagram, Twitter, Youtube, ArrowRight, Star, Play, Mail } from "lucide-react"
 import Image from "next/image"
 import AnimatedHoodie from "@/components/animated-hoodie"
 import { motion } from "framer-motion"
@@ -529,80 +529,54 @@ export default function TrueKimeHomepage() {
       {/* Footer */}
       <footer className="bg-black border-t border-gray-800 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Brand/About + Instagram */}
+            <div className="md:col-span-1 flex flex-col justify-center">
               <Image src="/images/true-kime-logo-alt.png" alt="TRUE KIME" width={300} height={80} className="mb-6" />
               <p className="text-gray-400 mb-6 max-w-md font-body">
                 Premium streetwear inspired by martial arts philosophy. Decide. Commit. Stay True.
               </p>
               <div className="flex space-x-4">
-                <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-500 font-brand">
-                  <Instagram className="w-5 h-5" />
-                </Button>
-                <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-500 font-brand">
-                  <Twitter className="w-5 h-5" />
-                </Button>
-                <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-500 font-brand">
-                  <Youtube className="w-5 h-5" />
-                </Button>
+                <a href="https://instagram.com/truekimeshop" target="_blank" rel="noopener noreferrer">
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-500 font-brand">
+                    <Instagram className="w-5 h-5" />
+                  </Button>
+                </a>
               </div>
             </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-4 font-brand">Shop</h4>
-              <ul className="space-y-2 text-gray-400 font-body">
-                <li>
-                  <a href="#" className="hover:text-red-500 transition-colors">
-                    New Arrivals
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-red-500 transition-colors">
-                    Tees & Tanks
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-red-500 transition-colors">
-                    Hoodies
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-red-500 transition-colors">
-                    Accessories
-                  </a>
-                </li>
-              </ul>
+            {/* Contact Us section */}
+            <div className="md:col-span-1 flex flex-col justify-center">
+              <h4 className="text-white font-semibold mb-4 font-brand">Contact Us</h4>
+              <div className="flex flex-col gap-3 text-gray-300 font-body">
+                <a href="mailto:truekimeshop@gmail.com" className="inline-flex items-center space-x-3 hover:text-red-500 transition-colors">
+                  <Mail className="w-5 h-5" />
+                  <span>truekimeshop@gmail.com</span>
+                </a>
+                <div className="inline-flex items-center space-x-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 21a8.25 8.25 0 10-15 0h15z" />
+                  </svg>
+                  <span>Markham, Ontario Canada</span>
+                </div>
+              </div>
             </div>
-
-            <div>
-              <h4 className="text-white font-semibold mb-4 font-brand">Connect</h4>
-              <ul className="space-y-2 text-gray-400 font-body">
-                <li>
-                  <a href="#" className="hover:text-red-500 transition-colors">
-                    About Us
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-red-500 transition-colors">
-                    Philosophy
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-red-500 transition-colors">
-                    KimeCast
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="hover:text-red-500 transition-colors">
-                    Contact
-                  </a>
-                </li>
-              </ul>
+            {/* Newsletter sign-up */}
+            <div className="md:col-span-1 flex flex-col justify-center">
+              <h4 className="text-white font-semibold mb-4 font-brand">Stay Updated</h4>
+              <p className="text-gray-400 mb-4 font-body">Subscribe to our newsletter for updates and news.</p>
+              <form className="flex">
+                <input
+                  type="email"
+                  placeholder="Your email"
+                  className="px-4 py-2 rounded-l-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
+                />
+                <button type="submit" className="px-4 py-2 bg-red-600 text-white rounded-r-md font-bold hover:bg-red-700 transition">Subscribe</button>
+              </form>
             </div>
           </div>
-
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 font-body">
-            <p>&copy; 2024 True Kime. All rights reserved. Stay True.</p>
+            <p>&copy; 2025 True Kime. All rights reserved. Stay True.</p>
           </div>
         </div>
       </footer>

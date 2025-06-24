@@ -128,29 +128,32 @@ export default function TeamPage() {
           </motion.div>
 
           <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto items-center">
               {/* Zac's Card - Larger */}
               <motion.div
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.2 }}
                 variants={fadeUpVariant}
-                className="bg-gray-900/50 border-gray-800 hover:border-red-500 transition-all duration-300 group overflow-hidden transform-gpu hover:scale-105 hover:shadow-2xl rounded-lg flex flex-col items-center max-w-md w-full mx-auto"
-                style={{ minWidth: '420px', minHeight: '540px' }}
+                className="bg-gray-900/50 border-gray-800 hover:border-red-500 transition-all duration-300 group overflow-hidden transform-gpu hover:scale-105 hover:shadow-2xl rounded-lg flex flex-col items-center w-full max-w-md mx-auto"
               >
-                <div className="relative w-full h-[420px] overflow-hidden rounded-t-lg flex items-center justify-center border-4 border-red-500">
-                  <img
+                <div className="relative w-full h-[420px] overflow-hidden rounded-t-lg flex items-center justify-center border-4 border-red-500 bg-black">
+                  <Image
                     src={teamMembers[0].imageFront}
                     alt={teamMembers[0].name}
-                    className="w-full h-full object-contain transition-all duration-1000 absolute inset-0 z-10 group-hover:opacity-0 group-hover:scale-105 group-hover:shadow-2xl bg-black"
-                    style={{ pointerEvents: 'none' }}
+                    layout="fill"
+                    objectFit="contain"
+                    className="transition-all duration-1000 absolute inset-0 z-10 group-hover:opacity-0 group-hover:scale-105 group-hover:shadow-2xl"
                   />
-                  <img
-                    src={teamMembers[0].imageBack}
-                    alt={teamMembers[0].name + ' Alt'}
-                    className="w-full h-full object-contain transition-all duration-1000 absolute inset-0 opacity-0 group-hover:opacity-100 group-hover:scale-105 group-hover:shadow-2xl z-20 bg-black"
-                    style={{ pointerEvents: 'none' }}
-                  />
+                  {teamMembers[0].imageBack && (
+                    <Image
+                      src={teamMembers[0].imageBack}
+                      alt={teamMembers[0].name + " Alt"}
+                      layout="fill"
+                      objectFit="contain"
+                      className="transition-all duration-1000 absolute inset-0 opacity-0 group-hover:opacity-100 group-hover:scale-105 group-hover:shadow-2xl z-20"
+                    />
+                  )}
                 </div>
                 <div className="p-8 w-full flex flex-col items-center">
                   <h3 className="text-3xl font-bold text-white mb-2 font-brand text-center">{teamMembers[0].name}</h3>
@@ -158,13 +161,13 @@ export default function TeamPage() {
                 </div>
               </motion.div>
               {/* Zac's Vision Blurb on the right */}
-              <div className="flex items-center justify-center h-full p-8">
-                <div className="w-full max-w-md">
-                  <div className="text-red-500 font-brand text-2xl md:text-3xl font-bold mb-4 text-center">Founder's Message</div>
-                  <div className="text-white font-montserrat font-semibold text-xl md:text-2xl text-center leading-relaxed mb-6" style={{ lineHeight: 1.5 }}>
+              <div className="flex items-center justify-center h-full p-4 md:p-8">
+                <div className="w-full max-w-md text-center">
+                  <div className="text-red-500 font-brand text-2xl md:text-3xl font-bold mb-4">Founder's Message</div>
+                  <div className="text-white font-montserrat font-semibold text-lg md:text-xl leading-relaxed mb-6" style={{ lineHeight: 1.5 }}>
                     {teamMembers[0].vision}
                   </div>
-                  <div className="text-gray-300 italic text-lg text-center font-montserrat mt-6">"{teamMembers[0].quote}"<span className="block text-sm not-italic text-gray-400 mt-2">- Zac Chin</span></div>
+                  <div className="text-gray-300 italic text-base md:text-lg text-center font-montserrat mt-6">"{teamMembers[0].quote}"<span className="block text-sm not-italic text-gray-400 mt-2">- Zac Chin</span></div>
                 </div>
               </div>
             </div>

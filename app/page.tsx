@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ShoppingCart, Instagram, Twitter, Youtube, ArrowRight, Star, Play, Mail } from "lucide-react"
+import { ShoppingCart, Instagram, Twitter, Youtube, ArrowRight, Star, Play, Mail, Menu, X } from "lucide-react"
 import Image from "next/image"
 import AnimatedHoodie from "@/components/animated-hoodie"
 import { motion } from "framer-motion"
@@ -14,6 +14,7 @@ import Link from "next/link"
 
 export default function TrueKimeHomepage() {
   const [scrollY, setScrollY] = useState(0)
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const heroRef = useRef<HTMLElement>(null)
   const philosophyRef = useRef<HTMLElement>(null)
   const productsRef = useRef<HTMLElement>(null)
@@ -23,6 +24,15 @@ export default function TrueKimeHomepage() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  const navLinks = [
+    { href: '#philosophy', text: 'Philosophy' },
+    { href: '#products', text: 'Collection' },
+    { href: '#champions', text: 'Champions' },
+    { href: '#kimecast', text: 'KimeCast' },
+    { href: '/contact', text: 'Contact' },
+    { href: '/team', text: 'Our Team' },
+  ];
 
   const products = [
     {
@@ -69,31 +79,26 @@ export default function TrueKimeHomepage() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-red-900/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
+          <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-8">
-              <Image
-                src="/images/tk-compass-logo.png"
-                alt="TK Compass Logo"
-                width={40}
-                height={40}
-                className="hover:scale-110 transition-transform duration-300"
-              />
+              <a href="#">
+                <Image
+                  src="/images/tk-compass-logo.png"
+                  alt="TK Compass Logo"
+                  width={40}
+                  height={40}
+                  className="hover:scale-110 transition-transform duration-300"
+                />
+              </a>
               <div className="hidden md:flex space-x-6">
-                <a href="#philosophy" className="text-gray-300 hover:text-red-500 transition-colors font-brand">
-                  Philosophy
-                </a>
-                <a href="#products" className="text-gray-300 hover:text-red-500 transition-colors font-brand">
-                  Collection
-                </a>
-                <a href="#champions" className="text-gray-300 hover:text-red-500 transition-colors font-brand">
-                  Champions
-                </a>
-                <a href="#kimecast" className="text-gray-300 hover:text-red-500 transition-colors font-brand">
-                  KimeCast
-                </a>
+                {navLinks.slice(0, 4).map(link => (
+                  <a key={link.href} href={link.href} className="text-gray-300 hover:text-red-500 transition-colors font-brand">
+                    {link.text}
+                  </a>
+                ))}
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
               <Button
                 variant="ghost"
                 size="sm"
@@ -121,18 +126,64 @@ export default function TrueKimeHomepage() {
                 </a>
               </Button>
             </div>
+            <div className="md:hidden flex items-center">
+              <Button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                variant="ghost"
+                size="icon"
+                className="text-gray-300 hover:text-red-500"
+              >
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </Button>
+            </div>
           </div>
         </div>
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <motion.div
+            className="md:hidden bg-black/90 backdrop-blur-lg"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-red-500 hover:bg-gray-800 transition-colors font-brand"
+                >
+                  {link.text}
+                </a>
+              ))}
+              <div className="pt-4 px-3">
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="w-full border-red-500 text-red-500 hover:bg-red-500 hover:text-black font-brand"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <a href="https://d2530f-0d.myshopify.com/" target="_blank" rel="noopener noreferrer">
+                    Shop Now
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </motion.div>
+        )}
       </nav>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative h-screen flex items-center bg-black overflow-hidden">
+      <section ref={heroRef} className="relative min-h-screen flex items-center bg-black overflow-hidden pt-20">
         {/* Hero Content - Split Layout */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-screen pt-32 pb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
             {/* Left Side - Logo and Content */}
             <motion.div
-              className="flex flex-col justify-center space-y-8"
+              className="flex flex-col justify-center space-y-8 text-center lg:text-left"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.2 }}
@@ -150,12 +201,12 @@ export default function TrueKimeHomepage() {
                   alt="TRUE KIME"
                   width={800}
                   height={250}
-                  className="w-full max-w-2xl hover:scale-105 transition-transform duration-500"
+                  className="w-full max-w-md lg:max-w-2xl mx-auto lg:mx-0 hover:scale-105 transition-transform duration-500"
                   priority
                 />
               </motion.div>
               <motion.p
-                className="text-xl md:text-2xl text-gray-300 max-w-xl leading-relaxed font-body"
+                className="text-xl md:text-2xl text-gray-300 max-w-xl mx-auto lg:mx-0 leading-relaxed font-body"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.2 }}
@@ -165,7 +216,7 @@ export default function TrueKimeHomepage() {
                 Where martial arts discipline meets modern streetwear culture
               </motion.p>
               <motion.div
-                className="flex flex-col sm:flex-row gap-4"
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: false, amount: 0.2 }}
@@ -211,13 +262,13 @@ export default function TrueKimeHomepage() {
             alt="TK Compass Background"
             width={800}
             height={800}
-            className="mx-auto mt-24"
+            className="mx-auto mt-24 w-1/2 md:w-auto"
           />
         </div>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center">
             <motion.h2
-              className="text-5xl md:text-7xl font-bold text-red-500 mb-8 tracking-tight font-brand flex flex-wrap justify-center gap-4"
+              className="text-4xl md:text-7xl font-bold text-red-500 mb-8 tracking-tight font-brand flex flex-wrap justify-center gap-x-4 gap-y-2"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.2 }}
@@ -286,7 +337,7 @@ export default function TrueKimeHomepage() {
               Featured Collection
             </motion.h2>
             <motion.p
-              className="text-xl text-gray-400 font-body"
+              className="text-lg md:text-xl text-gray-400 font-body max-w-3xl mx-auto"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.2 }}
@@ -297,7 +348,7 @@ export default function TrueKimeHomepage() {
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -307,25 +358,23 @@ export default function TrueKimeHomepage() {
                 variants={fadeUpVariant}
                 transition={{ duration: 0.8, delay: index * 0.15, ease: 'easeOut' }}
               >
-                <Card className="bg-black border-gray-800 hover:border-red-500 transition-all duration-300 group overflow-hidden transform-gpu hover:scale-105 hover:shadow-2xl">
+                <Card className="bg-black border-gray-800 hover:border-red-500 transition-all duration-300 group overflow-hidden transform-gpu hover:scale-105 hover:shadow-2xl h-full flex flex-col">
                   <div className="relative h-80 overflow-hidden group">
                     {product.imageBack ? (
                       <>
-                        <img
+                        <Image
                           src={product.imageFront}
                           alt={product.name}
                           width={300}
                           height={400}
-                          className="w-full h-80 object-cover transition-opacity duration-1000 absolute inset-0 z-10 group-hover:opacity-0 group-hover:scale-110 group-hover:shadow-xl transition-transform"
-                          style={{ pointerEvents: 'none' }}
+                          className="w-full h-full object-cover transition-opacity duration-1000 absolute inset-0 z-10 group-hover:opacity-0 group-hover:scale-110 group-hover:shadow-xl transition-transform"
                         />
-                        <img
+                        <Image
                           src={product.imageBack}
                           alt={product.name + ' Back'}
                           width={300}
                           height={400}
-                          className="w-full h-80 object-cover transition-opacity duration-1000 absolute inset-0 z-20 opacity-0 group-hover:opacity-100 group-hover:scale-110 group-hover:shadow-xl transition-transform"
-                          style={{ pointerEvents: 'none' }}
+                          className="w-full h-full object-cover transition-opacity duration-1000 absolute inset-0 z-20 opacity-0 group-hover:opacity-100 group-hover:scale-110 group-hover:shadow-xl transition-transform"
                         />
                       </>
                     ) : (
@@ -334,16 +383,16 @@ export default function TrueKimeHomepage() {
                         alt={product.name}
                         width={300}
                         height={400}
-                        className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                       />
                     )}
                     {product.badge && (
                       <Badge className="absolute top-4 left-4 bg-red-600 text-white">{product.badge}</Badge>
                     )}
                   </div>
-                  <CardContent className="p-6">
-                    <h3 className="text-2xl text-white mb-2 font-bold font-brand tracking-wide" style={{ letterSpacing: '0.03em' }}>{product.name}</h3>
-                    <p className="text-2xl font-bold text-red-500 font-body">{product.price}</p>
+                  <CardContent className="p-6 flex-grow flex flex-col">
+                    <h3 className="text-xl md:text-2xl text-white mb-2 font-bold font-brand tracking-wide flex-grow" style={{ letterSpacing: '0.03em' }}>{product.name}</h3>
+                    <p className="text-2xl font-bold text-red-500 font-body mt-4">{product.price}</p>
                   </CardContent>
                 </Card>
               </motion.div>
@@ -368,7 +417,7 @@ export default function TrueKimeHomepage() {
               <span className="font-brush text-red-500 transform rotate-1 inline-block text-5xl">Champions</span>
             </motion.h2>
             <motion.p
-              className="text-xl text-gray-400 font-body"
+              className="text-lg md:text-xl text-gray-400 font-body max-w-3xl mx-auto"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: false, amount: 0.2 }}
@@ -388,10 +437,10 @@ export default function TrueKimeHomepage() {
               variants={fadeUpVariant}
               transition={{ duration: 0.8, delay: 0, ease: 'easeOut' }}
             >
-              <Card className="bg-gray-900/50 border-gray-800 hover:border-red-500 transition-all duration-300 group overflow-hidden transform-gpu hover:scale-105 hover:shadow-2xl">
+              <Card className="bg-gray-900/50 border-gray-800 hover:border-red-500 transition-all duration-300 group overflow-hidden transform-gpu hover:scale-105 hover:shadow-2xl h-full">
                 <CardContent className="p-6">
-                  <div className="relative mb-6 overflow-hidden rounded-lg bg-black p-4 flex items-center justify-center" style={{ minHeight: '320px', minWidth: '220px' }}>
-                    <img
+                  <div className="relative mb-6 overflow-hidden rounded-lg bg-black p-4 flex items-center justify-center min-h-[320px]">
+                    <Image
                       src="/images/ariel_grace_kime.jpg"
                       alt="Ariel Torres & Grace Lau in True Kime"
                       width={400}
@@ -399,7 +448,7 @@ export default function TrueKimeHomepage() {
                       className="max-h-80 w-auto object-contain border-4 border-red-500 rounded-lg shadow-lg group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
-                  <blockquote className="text-gray-300 italic mb-4 font-body text-lg">Ariel Torres & Grace Lau repping True Kime.</blockquote>
+                  <blockquote className="text-gray-300 italic mb-4 font-body text-lg text-center">Ariel Torres & Grace Lau repping True Kime.</blockquote>
                 </CardContent>
               </Card>
             </motion.div>
@@ -411,37 +460,36 @@ export default function TrueKimeHomepage() {
               variants={fadeUpVariant}
               transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
             >
-              <Card className="bg-gray-900/50 border-gray-800 hover:border-red-500 transition-all duration-300 group overflow-hidden transform-gpu hover:scale-105 hover:shadow-2xl">
+              <Card className="bg-gray-900/50 border-gray-800 hover:border-red-500 transition-all duration-300 group overflow-hidden transform-gpu hover:scale-105 hover:shadow-2xl h-full">
                 <CardContent className="p-6">
-                  <div className="relative mb-6 overflow-hidden rounded-lg bg-black p-4 flex items-center justify-center group" style={{ minHeight: '320px', minWidth: '220px' }}>
+                  <div className="relative mb-6 overflow-hidden rounded-lg bg-black p-4 flex items-center justify-center group min-h-[320px]">
                     {/* Background brush illustration */}
-                    <img
+                    <Image
                       src="/images/tk-compass-logo.png"
                       alt="Brush Stroke"
+                      width={160}
+                      height={160}
                       className="absolute left-1/2 top-1/2 w-40 h-40 opacity-10 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none"
-                      style={{ zIndex: 1 }}
                     />
                     {/* Karim front/back images, both centered and with border/shadow */}
                     <div className="relative flex items-center justify-center w-full h-full z-10">
-                      <img
+                      <Image
                         src="/images/karim_kime.webp"
                         alt="Karim in True Kime"
                         width={400}
                         height={400}
-                        className="max-h-80 w-auto object-contain border-4 border-red-500 rounded-lg shadow-lg transition-all duration-1000 group-hover:opacity-0 group-hover:scale-105 group-hover:shadow-2xl"
-                        style={{ pointerEvents: 'none', position: 'relative' }}
+                        className="max-h-80 w-auto object-contain border-4 border-red-500 rounded-lg shadow-lg transition-all duration-1000 group-hover:opacity-0 group-hover:scale-105 group-hover:shadow-2xl absolute"
                       />
-                      <img
+                      <Image
                         src="/images/karim_podium.jpg"
                         alt="Karim Podium"
                         width={400}
                         height={400}
-                        className="max-h-80 w-auto object-contain border-4 border-red-500 rounded-lg shadow-lg transition-all duration-1000 absolute left-1/2 top-1/2 opacity-0 group-hover:opacity-100 group-hover:scale-105 group-hover:shadow-2xl -translate-x-1/2 -translate-y-1/2"
-                        style={{ pointerEvents: 'none' }}
+                        className="max-h-80 w-auto object-contain border-4 border-red-500 rounded-lg shadow-lg transition-all duration-1000 opacity-0 group-hover:opacity-100 group-hover:scale-105 group-hover:shadow-2xl"
                       />
                     </div>
                   </div>
-                  <blockquote className="text-gray-300 italic mb-4 font-body text-lg">Karim showing off his True Kime spirit.</blockquote>
+                  <blockquote className="text-gray-300 italic mb-4 font-body text-lg text-center">Karim showing off his True Kime spirit.</blockquote>
                 </CardContent>
               </Card>
             </motion.div>
@@ -464,7 +512,7 @@ export default function TrueKimeHomepage() {
               variants={{
                 visible: { transition: { staggerChildren: 0.2 } }
               }}
-              className="space-y-8"
+              className="space-y-8 text-center lg:text-left"
             >
               <motion.div
                 variants={{
@@ -472,14 +520,14 @@ export default function TrueKimeHomepage() {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
                 }}
               >
-                <h2 className="text-5xl md:text-6xl font-bold mb-6 font-brand">
+                <h2 className="text-4xl md:text-6xl font-bold mb-6 font-brand">
                   <span className="font-brush text-red-500 transform -rotate-1 inline-block">KimeCast</span>
                 </h2>
                 <div className="space-y-6">
-                  <p className="text-2xl text-gray-300 leading-relaxed font-body">
+                  <p className="text-xl md:text-2xl text-gray-300 leading-relaxed font-body">
                     Join us on our journey through the world of martial arts, where every story is a testament to dedication and passion.
                   </p>
-                  <p className="text-xl text-gray-400 leading-relaxed font-body">
+                  <p className="text-lg md:text-xl text-gray-400 leading-relaxed font-body">
                     From behind-the-scenes moments to athlete spotlights, we're bringing you closer to the heart of the martial arts community.
                   </p>
                   <motion.div
@@ -493,7 +541,7 @@ export default function TrueKimeHomepage() {
                       href="https://www.instagram.com/truekimecast/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-red-500 hover:text-red-400 transition-colors group font-brand text-xl"
+                      className="inline-flex items-center gap-2 text-red-500 hover:text-red-400 transition-colors group font-brand text-lg md:text-xl"
                     >
                       Follow our journey
                       <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -529,24 +577,24 @@ export default function TrueKimeHomepage() {
       {/* Footer */}
       <footer className="bg-black border-t border-gray-800 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 text-center md:text-left">
             {/* Brand/About + Instagram */}
-            <div className="md:col-span-1 flex flex-col justify-center">
-              <Image src="/images/true-kime-logo-alt.png" alt="TRUE KIME" width={300} height={80} className="mb-6" />
+            <div className="flex flex-col items-center md:items-start">
+              <Image src="/images/true-kime-logo-alt.png" alt="TRUE KIME" width={240} height={64} className="mb-6" />
               <p className="text-gray-400 mb-6 max-w-md font-body">
                 Premium streetwear inspired by martial arts philosophy. Decide. Commit. Stay True.
               </p>
               <div className="flex space-x-4">
                 <a href="https://instagram.com/truekimeshop" target="_blank" rel="noopener noreferrer">
                   <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-500 font-brand">
-                    <Instagram className="w-5 h-5" />
+                    <Instagram className="w-6 h-6" />
                   </Button>
                 </a>
               </div>
             </div>
             {/* Contact Us section */}
-            <div className="md:col-span-1 flex flex-col justify-center">
-              <h4 className="text-white font-semibold mb-4 font-brand">Contact Us</h4>
+            <div className="flex flex-col items-center md:items-start">
+              <h4 className="text-white font-semibold mb-4 font-brand text-lg">Contact Us</h4>
               <div className="flex flex-col gap-3 text-gray-300 font-body">
                 <a href="mailto:truekimeshop@gmail.com" className="inline-flex items-center space-x-3 hover:text-red-500 transition-colors">
                   <Mail className="w-5 h-5" />
@@ -562,10 +610,10 @@ export default function TrueKimeHomepage() {
               </div>
             </div>
             {/* Newsletter sign-up */}
-            <div className="md:col-span-1 flex flex-col justify-center">
-              <h4 className="text-white font-semibold mb-4 font-brand">Stay Updated</h4>
+            <div className="flex flex-col items-center md:items-start">
+              <h4 className="text-white font-semibold mb-4 font-brand text-lg">Stay Updated</h4>
               <p className="text-gray-400 mb-4 font-body">Subscribe to our newsletter for updates and news.</p>
-              <form className="flex">
+              <form className="flex w-full max-w-sm">
                 <input
                   type="email"
                   placeholder="Your email"

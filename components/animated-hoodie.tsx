@@ -20,8 +20,8 @@ export default function AnimatedHoodie() {
         </div>
         {/* Product Image */}
         <img
-          src="/images/true-kime-collection.png"
-          alt="True Kime Collection - Hoodie, T-Shirt & Apparel"
+          src="/images/heat.png"
+          alt="TRUE HEAT"
           width={600}
           height={700}
           className="object-contain rounded-2xl group-hover:scale-105 transition-all duration-700 max-w-full h-auto relative z-30 shadow-xl"

@@ -19,11 +19,34 @@ export default function TrueKimeHomepage() {
   const philosophyRef = useRef<HTMLElement>(null)
   const productsRef = useRef<HTMLElement>(null)
 
+  // Pre-launch countdown (adjust launch date/time as needed)
+  const LAUNCH_DATE = new Date("2025-08-28T01:00:00Z").getTime() // 7pm MDT (UTC-6)
+  const [nowTs, setNowTs] = useState<number>(() => Date.now())
+  const displayDate = "08/28/2025"
+  const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+  const isPrelaunch = nowTs < LAUNCH_DATE
+
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY)
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      const currentTs = Date.now()
+      setNowTs(currentTs)
+      const diff = Math.max(0, LAUNCH_DATE - currentTs)
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000)
+      setTimeLeft({ days, hours, minutes, seconds })
+    }, 1000)
+    return () => window.clearInterval(intervalId)
+  }, [])
+
+  const formatTime = (n: number) => n.toString().padStart(2, "0")
 
   const navLinks = [
     { href: '#philosophy', text: 'Philosophy' },
@@ -37,32 +60,35 @@ export default function TrueKimeHomepage() {
   const products = [
     {
       id: 1,
-      name: "True Kime Branded Tee Shirt",
+      name: "True Heat Varsity Tee",
       price: "$35 CAD",
-      imageFront: "/images/truekime_shirtfront.webp",
-      imageBack: "/images/truekime_shirtback.webp",
+      imageFront: "/images/varsityshirttrueheat.png",
+      badge: "Limited",
     },
     {
       id: 2,
-      name: "True Kime Branded Hoodie",
-      price: "$50 CAD",
-      imageFront: "/images/truekimehoodiefront.webp",
-      imageBack: "/images/truekimehoodieback.webp",
+      name: "True Heat Minimalist Tee",
+      price: "$35 CAD",
+      imageFront: "/images/minimalistfronttrueheat.png",
+      imageBack: "/images/minimalistbacktrueheat.png",
+      badge: "Limited",
     },
     {
       id: 3,
-      name: "Ariel Torres 'Airbender Torres' Tee Shirt",
-      price: "$42 CAD",
-      imageFront: "/images/arieltorres.webp",
-      badge: "Featured",
+      name: "True Heat Cursive Tee",
+      price: "$35 CAD",
+      imageFront: "/images/cursivefronttrueheat.png",
+      imageBack: "/images/cursivebacktrueheat.png",
+      badge: "Limited",
     },
     {
       id: 4,
-      name: "Grace Lau '#1 World Ranked' Tee Shirt",
-      price: "$42 CAD",
-      imageFront: "/images/GraceLauShirt1.webp",
-      badge: "Featured",
+      name: "True Heat Varsity Shorts",
+      price: "$35 CAD",
+      imageFront: "/images/varsityshortstrueheat.png",
+      badge: "Limited",
     },
+
   ]
 
   // Animation variants for scroll
@@ -76,15 +102,43 @@ export default function TrueKimeHomepage() {
       <Head>
         <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet" />
       </Head>
+      {/* Announcement Bar */}
+      {isPrelaunch && (
+        <div className="fixed top-0 w-full z-50 bg-gradient-to-r from-red-700 via-red-600 to-red-700 text-white text-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className="font-brand tracking-wide text-white/90">TRUE HEAT</span>
+              <span className="text-white/80">drops on</span>
+              <span className="font-semibold">{displayDate}</span>
+              <span className="hidden sm:inline text-white/60">•</span>
+              <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 bg-black/30 rounded-md px-2 py-0.5 font-mono">
+                  <span className="tabular-nums">{timeLeft.days}d</span>
+                  <span className="opacity-60">:</span>
+                  <span className="tabular-nums">{formatTime(timeLeft.hours)}h</span>
+                  <span className="opacity-60">:</span>
+                  <span className="tabular-nums">{formatTime(timeLeft.minutes)}m</span>
+                  <span className="opacity-60">:</span>
+                  <span className="tabular-nums">{formatTime(timeLeft.seconds)}s</span>
+                </div>
+              </div>
+            </div>
+            <a href="https://instagram.com/truekimeshop" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 decoration-white/60 hover:decoration-white font-body">
+              Follow @truekimeshop
+            </a>
+          </div>
+        </div>
+      )}
+
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-red-900/20">
+      <nav className={`fixed ${isPrelaunch ? 'top-10' : 'top-0'} w-full z-40 bg-black/80 backdrop-blur-md border-b border-red-900/20`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-8">
               <a href="#">
                 <Image
-                  src="/images/tk-compass-logo.png"
-                  alt="TK Compass Logo"
+                  src="/images/newlogo.png"
+                  alt="TRUE KIME"
                   width={40}
                   height={40}
                   className="hover:scale-110 transition-transform duration-300"
@@ -177,7 +231,7 @@ export default function TrueKimeHomepage() {
       </nav>
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-screen flex items-center bg-black overflow-hidden pt-20">
+      <section ref={heroRef} className={`relative min-h-screen flex items-center bg-black overflow-hidden ${isPrelaunch ? 'pt-32' : 'pt-20'}`}> 
         {/* Hero Content - Split Layout */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
@@ -189,6 +243,8 @@ export default function TrueKimeHomepage() {
               viewport={{ once: false, amount: 0.2 }}
               variants={fadeUpVariant}
             >
+              
+
               <motion.div
                 className="mb-8"
                 initial={{ opacity: 0, y: -40, scale: 0.95 }}
@@ -387,7 +443,7 @@ export default function TrueKimeHomepage() {
                       />
                     )}
                     {product.badge && (
-                      <Badge className="absolute top-4 left-4 bg-red-600 text-white">{product.badge}</Badge>
+                      <Badge className="absolute top-4 left-4 bg-red-600 text-white z-30">{product.badge}</Badge>
                     )}
                   </div>
                   <CardContent className="p-6 flex-grow flex flex-col">

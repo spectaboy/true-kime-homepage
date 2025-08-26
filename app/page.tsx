@@ -11,6 +11,7 @@ import AnimatedHoodie from "@/components/animated-hoodie"
 import { motion } from "framer-motion"
 import React from "react"
 import Link from "next/link"
+import NewsletterSignup from "@/components/newsletter-signup"
 
 export default function TrueKimeHomepage() {
   const [scrollY, setScrollY] = useState(0)
@@ -668,14 +669,7 @@ export default function TrueKimeHomepage() {
             <div className="flex flex-col items-center md:items-start">
               <h4 className="text-white font-semibold mb-4 font-brand text-lg">Stay Updated</h4>
               <p className="text-gray-400 mb-4 font-body">Subscribe to our newsletter for updates and news.</p>
-              <form className="flex w-full max-w-sm">
-                <input
-                  type="email"
-                  placeholder="Your email"
-                  className="px-4 py-2 rounded-l-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 w-full"
-                />
-                <button type="submit" className="px-4 py-2 bg-red-600 text-white rounded-r-md font-bold hover:bg-red-700 transition">Subscribe</button>
-              </form>
+              <NewsletterSignup />
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 font-body">

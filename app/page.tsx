@@ -104,9 +104,9 @@ export default function TrueKimeHomepage() {
       </Head>
       {/* Announcement Bar */}
       {isPrelaunch && (
-        <div className="fixed top-0 w-full z-50 bg-gradient-to-r from-red-700 via-red-600 to-red-700 text-white text-sm">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center justify-between">
-            <div className="flex items-center gap-3">
+        <div className="fixed top-0 w-full z-50 bg-gradient-to-r from-red-700 via-red-600 to-red-700 text-white text-xs sm:text-sm">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 min-h-12 py-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
               <span className="font-brand tracking-wide text-white/90">TRUE HEAT</span>
               <span className="text-white/80">drops on</span>
               <span className="font-semibold">{displayDate}</span>
@@ -123,7 +123,7 @@ export default function TrueKimeHomepage() {
                 </div>
               </div>
             </div>
-            <a href="https://instagram.com/truekimeshop" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 decoration-white/60 hover:decoration-white font-body">
+            <a href="https://instagram.com/truekimeshop" target="_blank" rel="noopener noreferrer" className="hidden sm:inline underline underline-offset-2 decoration-white/60 hover:decoration-white font-body">
               Follow @truekimeshop
             </a>
           </div>
@@ -131,7 +131,7 @@ export default function TrueKimeHomepage() {
       )}
 
       {/* Navigation */}
-      <nav className={`fixed ${isPrelaunch ? 'top-10' : 'top-0'} w-full z-40 bg-black/80 backdrop-blur-md border-b border-red-900/20`}>
+      <nav className={`fixed ${isPrelaunch ? 'top-12' : 'top-0'} w-full z-40 bg-black/80 backdrop-blur-md border-b border-red-900/20`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-8">
@@ -231,7 +231,7 @@ export default function TrueKimeHomepage() {
       </nav>
 
       {/* Hero Section */}
-      <section ref={heroRef} className={`relative min-h-screen flex items-center bg-black overflow-hidden ${isPrelaunch ? 'pt-32' : 'pt-20'}`}> 
+      <section ref={heroRef} className={`relative min-h-screen flex ${isPrelaunch ? 'pt-28 md:pt-28 lg:pt-24' : 'pt-20'} items-start md:items-center bg-black overflow-hidden`}> 
         {/* Hero Content - Split Layout */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-80px)] py-20">
@@ -443,12 +443,11 @@ export default function TrueKimeHomepage() {
                       />
                     )}
                     {product.badge && (
-                      <Badge className="absolute top-4 left-4 bg-red-600 text-white z-30">{product.badge}</Badge>
+                      <Badge className="absolute top-2 left-2 sm:top-4 sm:left-4 bg-red-600 text-white z-30 text-[10px] sm:text-xs px-2 py-0.5">{product.badge}</Badge>
                     )}
                   </div>
                   <CardContent className="p-6 flex-grow flex flex-col">
                     <h3 className="text-xl md:text-2xl text-white mb-2 font-bold font-brand tracking-wide flex-grow" style={{ letterSpacing: '0.03em' }}>{product.name}</h3>
-                    <p className="text-2xl font-bold text-red-500 font-body mt-4">{product.price}</p>
                   </CardContent>
                 </Card>
               </motion.div>

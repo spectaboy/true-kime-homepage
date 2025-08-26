@@ -4,13 +4,13 @@ import { useState } from "react"
 
 export default function AnimatedHoodie() {
   return (
-    <div className="relative flex items-center justify-center w-full h-full min-h-[400px] min-w-[300px] py-8">
+    <div className="relative flex items-center justify-center w-full h-full min-h-[280px] sm:min-h-[360px] md:min-h-[420px] lg:min-h-[480px] py-6 md:py-8">
       {/* Glow Effect */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[640px] h-[740px] bg-red-500/10 rounded-2xl blur-3xl group-hover:bg-red-500/20 transition-all duration-700 z-10"></div>
+      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[380px] sm:w-[480px] sm:h-[540px] md:w-[560px] md:h-[640px] lg:w-[640px] lg:h-[740px] bg-red-500/10 rounded-2xl blur-xl md:blur-3xl transition-all duration-700 z-10"></div>
 
       {/* Elegant Border Frame */}
-      <div className="relative z-20 flex items-center justify-center w-[620px] h-[720px]">
-        <div className="absolute inset-0 w-full h-full border-2 border-gray-800/50 rounded-2xl pointer-events-none">
+      <div className="relative z-20 flex items-center justify-center w-full max-w-[640px] aspect-[6/7] px-3 sm:px-4 md:px-0">
+        <div className="absolute inset-0 w-full h-full border border-gray-800/50 rounded-2xl pointer-events-none">
           <div className="absolute inset-0 border border-red-500/20 rounded-2xl"></div>
           {/* Corner accents */}
           <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-red-500 rounded-tl-2xl"></div>
@@ -22,9 +22,7 @@ export default function AnimatedHoodie() {
         <img
           src="/images/heat.png"
           alt="TRUE HEAT"
-          width={600}
-          height={700}
-          className="object-contain rounded-2xl group-hover:scale-105 transition-all duration-700 max-w-full h-auto relative z-30 shadow-xl"
+          className="object-contain rounded-2xl md:group-hover:scale-105 transition-all duration-700 w-full h-full relative z-30 shadow-xl"
           style={{
             imageRendering: "auto",
             animationPlayState: "running",
@@ -33,7 +31,7 @@ export default function AnimatedHoodie() {
       </div>
 
       {/* Floating Animation Elements */}
-      <div className="absolute inset-0 pointer-events-none z-5">
+      <div className="absolute inset-0 pointer-events-none z-5 hidden sm:block">
         <div className="absolute top-10 right-10 w-2 h-2 bg-red-500 rounded-full animate-pulse opacity-60"></div>
         <div className="absolute bottom-20 left-10 w-1 h-1 bg-red-400 rounded-full animate-bounce opacity-40"></div>
         <div className="absolute top-1/2 right-5 w-1.5 h-1.5 bg-red-600 rounded-full animate-ping opacity-50"></div>

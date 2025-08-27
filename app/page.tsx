@@ -21,7 +21,7 @@ export default function TrueKimeHomepage() {
   const productsRef = useRef<HTMLElement>(null)
 
   // Pre-launch countdown (adjust launch date/time as needed)
-  const LAUNCH_DATE = new Date("2025-08-28T01:00:00Z").getTime() // 7pm MDT (UTC-6)
+  const LAUNCH_DATE = new Date("2025-08-28T16:00:00Z").getTime() // Thu 12pm ET (EDT)
   const [nowTs, setNowTs] = useState<number>(() => Date.now())
   const displayDate = "08/28/2025"
   const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number }>({ days: 0, hours: 0, minutes: 0, seconds: 0 })

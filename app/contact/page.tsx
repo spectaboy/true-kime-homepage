@@ -1,14 +1,64 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowLeft, Mail, Instagram, Twitter, Youtube } from "lucide-react"
+import { ArrowLeft, Mail, Instagram } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 export default function ContactPage() {
   const fadeUpVariant = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0 },
+  }
+
+  const schema = z.object({
+    name: z.string().min(1, "Name is required"),
+    email: z.string().email("Enter a valid email"),
+    message: z.string().min(10, "Message must be at least 10 characters"),
+  })
+
+  type FormData = z.infer<typeof schema>
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormData>({ resolver: zodResolver(schema) })
+
+  const [isSending, setIsSending] = useState(false)
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle")
+  const [statusMsg, setStatusMsg] = useState("")
+
+  const onSubmit = async (data: FormData) => {
+    setIsSending(true)
+    setStatus("idle")
+    setStatusMsg("")
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      })
+      if (!res.ok) {
+        const payload = await res.json().catch(() => ({ message: "Failed to send." }))
+        setStatus("error")
+        setStatusMsg(payload.message || "Failed to send message. Please try again.")
+        return
+      }
+      setStatus("success")
+      setStatusMsg("Message sent. We'll get back to you soon.")
+      reset()
+    } catch (e) {
+      setStatus("error")
+      setStatusMsg("Unexpected error. Please try again later.")
+    } finally {
+      setIsSending(false)
+    }
   }
 
   return (
@@ -51,7 +101,7 @@ export default function ContactPage() {
               variants={fadeUpVariant}
               className="bg-gray-900/50 rounded-lg p-8 border border-gray-800 w-full max-w-lg"
             >
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                     Name
@@ -59,8 +109,10 @@ export default function ContactPage() {
                   <input
                     type="text"
                     id="name"
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                    {...register("name")}
+                    className={`w-full px-4 py-2 bg-gray-800 border ${errors.name ? "border-red-600" : "border-gray-700"} rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500`}
                   />
+                  {errors.name && <p className="mt-2 text-sm text-red-500">{errors.name.message}</p>}
                 </div>
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
@@ -69,8 +121,10 @@ export default function ContactPage() {
                   <input
                     type="email"
                     id="email"
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                    {...register("email")}
+                    className={`w-full px-4 py-2 bg-gray-800 border ${errors.email ? "border-red-600" : "border-gray-700"} rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500`}
                   />
+                  {errors.email && <p className="mt-2 text-sm text-red-500">{errors.email.message}</p>}
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
@@ -79,11 +133,16 @@ export default function ContactPage() {
                   <textarea
                     id="message"
                     rows={4}
-                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                    {...register("message")}
+                    className={`w-full px-4 py-2 bg-gray-800 border ${errors.message ? "border-red-600" : "border-gray-700"} rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500`}
                   ></textarea>
+                  {errors.message && <p className="mt-2 text-sm text-red-500">{errors.message.message}</p>}
                 </div>
-                <Button className="w-full bg-red-600 hover:bg-red-700 text-white">
-                  Send Message
+                {status !== "idle" && (
+                  <p className={`text-sm ${status === "success" ? "text-green-500" : "text-red-500"}`}>{statusMsg}</p>
+                )}
+                <Button type="submit" disabled={isSending} className="w-full bg-red-600 hover:bg-red-700 text-white disabled:opacity-50">
+                  {isSending ? "Sending..." : "Send Message"}
                 </Button>
               </form>
               <div className="mt-8">

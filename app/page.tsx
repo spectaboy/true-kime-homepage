@@ -65,6 +65,7 @@ export default function TrueKimeHomepage() {
       price: "$35 CAD",
       imageFront: "/images/varsityshirttrueheat.png",
       badge: "Limited",
+      href: "https://d2530f-0d.myshopify.com/products/true-kime-varsity-tee",
     },
     {
       id: 2,
@@ -73,6 +74,7 @@ export default function TrueKimeHomepage() {
       imageFront: "/images/minimalistfronttrueheat.png",
       imageBack: "/images/minimalistbacktrueheat.png",
       badge: "Limited",
+      href: "https://d2530f-0d.myshopify.com/products/true-kime-belt-tee",
     },
     {
       id: 3,
@@ -81,6 +83,7 @@ export default function TrueKimeHomepage() {
       imageFront: "/images/cursivefronttrueheat.png",
       imageBack: "/images/cursivebacktrueheat.png",
       badge: "Limited",
+      href: "https://d2530f-0d.myshopify.com/products/true-kime-stay-true-tee",
     },
     {
       id: 4,
@@ -88,6 +91,7 @@ export default function TrueKimeHomepage() {
       price: "$35 CAD",
       imageFront: "/images/varsityshortstrueheat.png",
       badge: "Limited",
+      href: "https://d2530f-0d.myshopify.com/products/true-kime-varsity-shorts",
     },
 
   ]
@@ -469,6 +473,16 @@ export default function TrueKimeHomepage() {
                   </div>
                   <CardContent className="p-6 flex-grow flex flex-col">
                     <h3 className="text-xl md:text-2xl text-white mb-2 font-bold font-brand tracking-wide flex-grow" style={{ letterSpacing: '0.03em' }}>{product.name}</h3>
+                    <div className="mt-3">
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="sm"
+                        className="border-red-500 text-red-500 hover:bg-red-500 hover:text-black font-brand"
+                      >
+                        <a href={product.href} target="_blank" rel="noopener noreferrer">Buy Now</a>
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>

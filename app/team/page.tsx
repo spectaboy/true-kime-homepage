@@ -16,7 +16,7 @@ export default function TeamPage() {
     {
       name: "Zac \"Big Man\" Chin",
       role: "Founder/CEO",
-      imageFront: "/images/TeamWebsitePic.jpg",
+      imageFront: "/images/thisonehere.jpg",
       imageBack: "/images/zackarate.jpg",
       vision: "Zac's vision is to inspire others to stay true to themselves and their journey, blending martial arts discipline with modern streetwear culture. He leads True Kime with authenticity, passion, and a commitment to community.",
       instagram: "zac_karate",

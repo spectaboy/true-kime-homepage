@@ -133,27 +133,8 @@ export default function TrueKimeHomepage() {
         </div>
       )}
 
-      {/* Drop Announcement Bar (post-launch) */}
-      {!isPrelaunch && (
-        <div className="fixed top-0 w-full z-50 bg-red-700 text-white text-xs sm:text-sm">
-          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 min-h-12 py-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-              <span className="font-brand tracking-wide text-white">BOXING DAY LIVE - FREE SHIPPING ON ALL ORDERS</span>
-            </div>
-            <a
-              href="https://d2530f-0d.myshopify.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-md bg-black/20 px-3 py-1.5 font-brand text-white hover:bg-black/30 transition"
-            >
-              SHOP NOW
-            </a>
-          </div>
-        </div>
-      )}
-
       {/* Navigation */}
-      <nav className={`fixed ${isPrelaunch ? 'top-12' : 'top-12'} w-full z-40 bg-black/80 backdrop-blur-md border-b border-red-900/20`}>
+      <nav className={`fixed ${isPrelaunch ? 'top-12' : 'top-0'} w-full z-40 bg-black/80 backdrop-blur-md border-b border-red-900/20`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-8">
